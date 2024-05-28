@@ -4,9 +4,9 @@ function updateUser(req, res){
     let body = []
     req.on("data", chunk=>{
         body.push(chunk)
-    }).on('end', ()=>{
+    }).on('end', async ()=>{
         body = JSON.parse(Buffer.concat(body).toString())
-        data.update(body.id, body.user)
+        await data.update(body)
         res.writeHead(200)
         res.end()
     }) 

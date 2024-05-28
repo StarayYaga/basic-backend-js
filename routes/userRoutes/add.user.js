@@ -4,13 +4,14 @@ function createUser(req, res){
     let body = []
     req.on("data", chunk=>{
         body.push(chunk)
-    }).on('end', ()=>{
+    }).on('end', async ()=>{
         body = JSON.parse(Buffer.concat(body).toString())
-        data.addUser({name: body.name})
+        const user = await data.addUser(body)
         res.writeHead(200)
-        res.end()
+        res.end(JSON.stringify(user))
     }) 
     // res.end(JSON.stringify(data.getUsers()))
 }
+
 
 module.exports = createUser

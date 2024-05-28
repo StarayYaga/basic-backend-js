@@ -4,10 +4,9 @@ function deleteUser(req, res){
     let body = []
     req.on("data", chunk=>{
         body.push(chunk)
-    }).on('end', ()=>{
+    }).on('end', async ()=>{
         body = JSON.parse(Buffer.concat(body).toString())
-        console.log(body)
-        data.deleteUser({id: body.id})
+        await data.deleteUser(body.id)
         res.writeHead(200)
         res.end()
     }) 

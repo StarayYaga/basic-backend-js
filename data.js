@@ -1,16 +1,11 @@
 let users = []
 let id = 1
 
+const sql = require("./sql.controller")
+
 module.exports = {
-    getUsers: ()=>users,
-    addUser: (user)=>{
-        user.id = id++
-        users.push(user)
-    },
-    deleteUser: (data)=>{
-        users = users.filter(item => item.id != data.id)
-    },
-    update: (id, user)=>{
-        users[users.findIndex(item=>item.id==id)] = user
-    }
+    getUsers: async ()=> await sql.getUsers(),
+    addUser: async (user)=>await sql.addUser(user),
+    deleteUser: async (idUser)=> await sql.deleteUser(idUser),
+    update: async (user)=> await sql.updateUser(user)
 }
