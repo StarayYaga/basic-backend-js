@@ -6,9 +6,9 @@ function updateUser(req, res){
         body.push(chunk)
     }).on('end', async ()=>{
         body = JSON.parse(Buffer.concat(body).toString())
-        await data.update(body)
+        const user = await data.update(body)
         res.writeHead(200)
-        res.end()
+        res.end(JSON.stringify(user))
     }) 
 }
 

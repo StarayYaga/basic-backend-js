@@ -30,12 +30,12 @@ module.exports = {
 
     async deleteUser(id){
         const status = await new Promise((resolve, reject)=>{
-            db.run(`delete from users where id = ( ?);`, [id],  (err)=>{
+            db.run(`delete from users where id = ( ?);`, [id],  function (err){
                 if (err) reject(err)
-                resolve(true)
+                resolve(this.changes)
             })
         })
-        return status 
+        return status >0 
     },
     async updateUser(user){
         const update = await new Promise((resolve, reject)=>{
@@ -44,6 +44,17 @@ module.exports = {
                 resolve(true)
             })
         })
-        return update
+        return await this.getUserById(user.id)
+    },
+
+    async getUserById(id){
+        const user = await new Promise((resolve, reject)=>{
+            db.get(`select * from users where id = (?);`, [id], (err, row)=>{
+                if (err) reject(err)
+                resolve(row)
+            })
+        })
+        // console.log(user);
+        return user
     }
 }

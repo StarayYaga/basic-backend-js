@@ -6,9 +6,9 @@ function deleteUser(req, res){
         body.push(chunk)
     }).on('end', async ()=>{
         body = JSON.parse(Buffer.concat(body).toString())
-        await data.deleteUser(body.id)
+        const user = await data.deleteUser(body.id)
         res.writeHead(200)
-        res.end()
+        res.end(JSON.stringify(user))
     }) 
     // res.end(JSON.stringify(data.getUsers()))
 }
